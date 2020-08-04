@@ -5,7 +5,7 @@
 		There is a mail kit nuget package <b>NetCore.MailKit</b> to send email in asp.net core project
 	</li>
 </ul><br>
-<h3>Steps involved in implement email confirmation when registering</he>
+<h3>Steps involved in implement email confirmation when registering</h3>
 <ol>
 	<li>Install NetCore.mailKit nuget package</li>
 	<li>In Startup.cs, in services.AddIdentity add config.SignIn.RequiredConfirmedEmail = true;</li>
