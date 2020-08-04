@@ -21,6 +21,18 @@ namespace _1.Basis.Controllers
             return View();
         }
 
+        [Authorize(Policy = "Claim.DoB")]
+        public IActionResult SecretPolicy()
+        {
+            return View("Secret");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult SecretAdmin()
+        {
+            return View("Secret");
+        }
+
         public void CheckUser()
         {
             var user = HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault();
@@ -31,6 +43,7 @@ namespace _1.Basis.Controllers
             var grandmaClaims = new List<Claim> {
                 new Claim(ClaimTypes.Name, "Bob"),
                 new Claim(ClaimTypes.Email, "Bob@fmail.com"),
+                new Claim(ClaimTypes.Role, "Admin"),
                 new Claim("Grandma.Says", "Very Nice Boy")
             };
 

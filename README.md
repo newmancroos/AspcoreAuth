@@ -62,3 +62,24 @@
 	</li>
 </ol>
 <hr/>
+<p>
+	<h3>Authorization</h3>
+	In .Net core autorization the default authorization policy is the user should get authenticated<br> we override our own default authorization plolicy. <br>
+	
+	<pre>
+	        services.AddAuthorization(config =&gt;
+            {
+                var defaultAuthBuilder = new AuthorizationPolicyBuilder();
+                var defaultAuthPolicy = defaultAuthBuilder
+                .RequireAuthenticatedUser()
+                .RequireClaim(ClaimTypes.DateOfBirth)
+                .Build();
+
+                config.DefaultPolicy = defaultAuthPolicy;
+            });
+	</pre>
+	if you don't have claim of type DataBirth then we'll get access denied page.
+	this is what defaultly happen.
+	<br>
+	
+</p>
