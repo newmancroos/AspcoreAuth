@@ -98,7 +98,6 @@
 			<pre>
 				 public async Task<IActionResult> DoStuff() {
 					//Do any stuff here
-
 					var builder = new AuthorizationPolicyBuilder("Schema");
 					var customPolicy = builder.RequireClaim("Hello").Build();
 					var authResult = await _authorizationService.AuthorizeAsync(User, customPolicy);
@@ -168,7 +167,6 @@
 						//await _authorizationService.AuthorizeAsync(User, null, requirement);
 						await _authorizationService.AuthorizeAsync(User, resource, requirement);
 						//Second parameter(resource) is optional but we can pass if any and need to specify this in the AuthorizationHandler
-
 						return View();
 					}
 				}
@@ -177,7 +175,6 @@
 					protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, 
 						OperationAuthorizationRequirement requirement, CookiJarResource resource)
 					{
-
 						//You can check resource for anyrequirement if you have
 						if (requirement.Name == CookieJarOperations.Look)
 						{
@@ -196,18 +193,15 @@
 						else if (requirement.Name == CookieJarOperations.Look)
 						{ 
 						}
-
 						return Task.CompletedTask;
 					}
 				}
-
 				public static class CookieJarOperations {
 					public static string Open = "Open";
 					public static string TakeCookie = "TakeCookie";
 					public static string ComeNear = "ComeNear";
 					public static string Look = "Look";
 				}
-
 				public class CookiJarResource
 				{
 					public string Name { get; set; }
@@ -228,7 +222,6 @@
 						{
 							((ClaimsIdentity)principal.Identity).AddClaim(new Claim("Friend", "Bad"));
 						}
-
 						return Task.FromResult(principal);
 					}    
 				}
@@ -237,8 +230,6 @@
 		</li>
 		<li>
 			<h3>Authorization Polcy Provider</h3><br>
-			
 		</li>
-		
 	</ul>
 </p>
