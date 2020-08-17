@@ -1,6 +1,8 @@
 using System.Security.Claims;
 using _1.Basis.AuthorizationRequirements;
 using _1.Basis.Controllers;
+using _1.Basis.Transformer;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +35,8 @@ namespace _1.Basis
 
             services.AddScoped<IAuthorizationHandler, CustomRequreClaimHandler>();
             services.AddScoped<IAuthorizationHandler, CookieJarAuthorizationHandler>();
+            services.AddScoped<IClaimsTransformation, ClaimsTransformation>();
+
             services.AddControllersWithViews();
 
             ////This is global filter, will added to all controller methods. If you want to bypass need to add [AllowAnonymous] atribute
