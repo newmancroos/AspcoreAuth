@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using _1.Basis.AuthorizationRequirements;
+using _1.Basis.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -27,31 +23,31 @@ namespace _1.Basis
 
             services.AddAuthorization(config =>
             {
-                //var defaultAuthBuilder = new AuthorizationPolicyBuilder();
-                //var defaultAuthPolicy = defaultAuthBuilder
-                //.RequireAuthenticatedUser()
-                //.RequireClaim(ClaimTypes.DateOfBirth)
-                //.Build();
-
-                //config.DefaultPolicy = defaultAuthPolicy;
-
-                //Built-in requirements
-                //---------------------
-                //config.AddPolicy("Admin", policyBuilder => policyBuilder.RequireClaim(ClaimTypes.Role, "Admin"));
-                //config.AddPolicy("Admins", policyBuilder => policyBuilder.RequireRole(new string[] {"Admin","SuperAdmin" }));
-
-
                 //Custom requirements
                 //---------------------
                 config.AddPolicy("Claim.DoB", policyBuilder =>  // This is duplicate functionality of ".RequireClaim(ClaimTypes.DateOfBirth)"
                 {
-                    //policyBuilder.AddRequirements(new CustomRequireClaim(ClaimTypes.DateOfBirth));
                     policyBuilder.RequireCustomeClaim(ClaimTypes.DateOfBirth);
                 });
             });
 
             services.AddScoped<IAuthorizationHandler, CustomRequreClaimHandler>();
+            services.AddScoped<IAuthorizationHandler, CookieJarAuthorizationHandler>();
             services.AddControllersWithViews();
+
+            ////This is global filter, will added to all controller methods. If you want to bypass need to add [AllowAnonymous] atribute
+            //services.AddControllersWithViews(config =>
+            //{
+            //    var defaultAuthBuilder = new AuthorizationPolicyBuilder();
+            //    var defaultAuthPolicy = defaultAuthBuilder
+
+            //    //If I add Database claim, it will thro Access denied even in Index page
+            //    //.RequireClaim(ClaimTypes.DateOfBirth)
+            //    .RequireAuthenticatedUser()
+            //    .Build();
+
+            //    config.Filters.Add(new AuthorizeFilter(defaultAuthPolicy));
+            //});
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
