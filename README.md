@@ -228,7 +228,9 @@
 			We need to register it in the startup.cs configureServices.
 		</li>
 		<li>
-			<h3>Authorization Polcy Provider</h3><br>
+			<h3>Authorization Polcy Provider</h3><br
+			Let's say we have many policies, it is not posible declare everything in the startup.cs so we can use Authorization Policy provider<br>
+			
 		</li>
 	</ul>
 </p>
