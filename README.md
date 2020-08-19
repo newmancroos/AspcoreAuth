@@ -230,7 +230,59 @@
 		<li>
 			<h3>Authorization Polcy Provider</h3><br
 			Let's say we have many policies, it is not posible declare everything in the startup.cs so we can use Authorization Policy provider<br>
-			
+			<h2>Learn it from diffeent source???</h2>
+		</li>
+		<li>
+			<h3>Authorizing Razor pages</h3>
+			Not like controller we cannot add authorize attribute to razor pages. so we need to configure aithorization to razor pages in startup.cs<br>
+			<pre>
+				//in configureServices
+				services.AddRazorPages()
+                .AddRazorPagesOptions(config => {
+                    config.Conventions.AuthorizePage("/Razor/Secured");  //this is a folder route (Pages/Razor/Secured.cshtml)
+                });
+				//in Configure, within app.UseEndpointes
+				app.UseEndpoints(endpoints =>{
+					endpoints.MapDefaultControllerRpute();  //Already there
+					endpoints.MapRazorPages();
+				}
+			</pre><br>
+			Add <b>Pages</b> dirextory in the project root and then a child directory within Pages folder <b>Razor</b>. If you create any page names <br>
+			Secured.cschtml razor page, and navigate to this page, if you are not authorized then we'll redirect to login page.<br>
+			You can also configure for a policy for a razor pages,<br>
+			<pre>
+			//in configureServices
+				services.AddRazorPages()
+                .AddRazorPagesOptions(config => {
+                    config.Conventions.AuthorizePage("/Razor/Secured");  //this is a folder route (Pages/Razor/Secured.cshtml)
+					config.Conventions.AuthorizePage("/Razor/Policy","PolicyName");  //this is a folder route (Pages/Razor/Secured.cshtml)
+                });
+			</pre>
+			If the policy satisfied then it'll be authorized.<br>
+			We can't give each pages authorize in the startup.cs so we can authorize folder wise.
+			<pre>
+			//in configureServices
+				services.AddRazorPages()
+                .AddRazorPagesOptions(config => {
+                    config.Conventions.AuthorizePage("/Razor/Secured");  //this is a folder route (Pages/Razor/Secured.cshtml)
+					config.Conventions.AuthorizePage("/Razor/Policy","PolicyName");  //this is a folder route (Pages/Razor/Secured.cshtml)
+					config.Conventions.AuthorizeFolder("/Razor/RazorSecure");
+                });
+			</pre>
+			Now all the razor pages with <b>Razor/RazorSecure</b> are should be authorize. But let say one page within <b>Razor/RazorSecure</b> <br>
+			shuld be Anonymouse then we can specify that in the startup razor authorize, like,
+						<pre>
+			//in configureServices
+				services.AddRazorPages()
+                .AddRazorPagesOptions(config => {
+                    config.Conventions.AuthorizePage("/Razor/Secured");  //this is a folder route (Pages/Razor/Secured.cshtml)
+					config.Conventions.AuthorizePage("/Razor/Policy","PolicyName");  //this is a folder route (Pages/Razor/Secured.cshtml)
+					config.Conventions.AuthorizeFolder("/RazorSecure");
+					config.Conventions.AllowAnonymousToPage("/RazorSecure/Anon");
+					
+                });
+			</pre>
+			here all the pages except anan.cshtml within Razor/RazorSecure should be authorized.
 		</li>
 	</ul>
 </p>
