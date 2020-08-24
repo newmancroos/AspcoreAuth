@@ -288,7 +288,98 @@
 		<h2><u>Bearer and Bearer Authorization</u></h2><br>
 		<h3>JWT Bearer:</h3><br>
 		<ul>
-			<li></li>
+			<li>
+				<pre>
+					services.AddAuthentication("OAuth")
+						.AddJwtBearer("OAuth", config => {
+							var secretBytes = Encoding.UTF8.GetBytes(Constants.Secret);
+							var key = new SymmetricSecurityKey(secretBytes);
+							config.TokenValidationParameters = new TokenValidationParameters()
+							{
+								ValidIssuer = Constants.Issuer,
+								ValidAudience = Constants.Audiance,
+								IssuerSigningKey = key,
+							};
+					});
+				</pre>
+				this will check the token passes to the service. Token generation is as follows.
+			</li>
+			<li>
+				<pre>
+					var claims = new[] {
+					new Claim(JwtRegisteredClaimNames.Sub, "some_id"),
+					new Claim("granny", "cookie")
+					};
+					//Goto Definition of SigningCredentials and right click on SecurityKey and 
+					//press F1 will take you to Microsoft help SecurityKey and we can grab one key from the
+					// listed keys. 
+					//1. Microsoft.IdentityModel.Tokens.AsymmetricsSecurityKey, 
+					//2. Microsoft.IdentityModel.Tokens.JsonWebKey
+					//3. Microsfot.IdentityModel.Tokens.SymmetricSecurityKey
+					var secretBytes = Encoding.UTF8.GetBytes(Constants.Secret);
+					var key = new SymmetricSecurityKey(secretBytes);
+					var algorithm = SecurityAlgorithms.HmacSha256;
+					var signingCredentials = new SigningCredentials(key, algorithm);
+					var token = new JwtSecurityToken(
+							Constants.Issuer, 
+							Constants.Audiance,
+							claims,
+							notBefore : DateTime.Now,
+							expires : DateTime.Now.AddHours(1),
+							signingCredentials
+						);
+					var toekJson = new JwtSecurityTokenHandler().WriteToken(token);
+					return Ok(new { accessToken = toekJson });
+				</pre>
+				Generated token has three part, we can see those party by visting <b>jwt.io</b> and pasting the generated token.<br>
+				<ol>
+					<li>Header - has alorithm used and type of token</li>
+					<li>Body - Has actual data we pass, that included all claims and issuer, audience, expire and not before</li>
+					<li>Signature - This is generated using the combination of <b>Header</b> and <b>Body</b>. If someone change anything in the token then signature will not match with the body so authentication will be failed.</li>
+				</ol>
+				each part separated by fullstop.
+			</li>
+			<li>
+				When you call the services you have to specify <b>Authorization = "beaerer [TokenHere]"</b> in the request header. OR you can pass it along the Url but for that we need to accept the token from the url and set it to the context, as below,
+				<pre>
+					services.AddAuthentication("OAuth")
+						.AddJwtBearer("OAuth", config => {
+							var secretBytes = Encoding.UTF8.GetBytes(Constants.Secret);
+							var key = new SymmetricSecurityKey(secretBytes);
+							//----------------------------------------------------------------------------------
+							//If we want to pass Bearer token in url we can validate the token here
+							//using JwtBeaererEvents. If yo want to pass it as header you don't need these block here
+							config.Events = new JwtBearerEvents()
+							{
+								OnMessageReceived = context => {
+									if (context.Request.Query.ContainsKey("access_token")) {
+										context.Token = context.Request.Query["access_token"];
+									}
+									return Task.CompletedTask;
+								}
+							};
+							//----------------------------------------------------------------------------------
+							config.TokenValidationParameters = new TokenValidationParameters()
+							{
+								ValidIssuer = Constants.Issuer,
+								ValidAudience = Constants.Audiance,
+								IssuerSigningKey = key,
+							};
+						});
+				</pre>
+				now you can call <b>https://localhost:2323/home/security?access_token=[accesstoekn]</b>
+			</li>
+			<li>
+				We can also programatically decode the token we send to the service.
+				<pre>
+				        public IActionResult Decode(string part)
+						{
+							//Here we have to give part of the Jwttoken not full
+							var bytes = Convert.FromBase64String(part);
+							return Ok(Encoding.UTF8.GetString(bytes));
+						}
+				</pre>
+			</li>
 		</ul>
 	</p>
 </p>
