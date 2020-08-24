@@ -271,7 +271,7 @@
 			</pre>
 			Now all the razor pages with <b>Razor/RazorSecure</b> are should be authorize. But let say one page within <b>Razor/RazorSecure</b> <br>
 			shuld be Anonymouse then we can specify that in the startup razor authorize, like,
-						<pre>
+			<pre>
 			//in configureServices
 				services.AddRazorPages()
                 .AddRazorPagesOptions(config => {
@@ -279,10 +279,16 @@
 					config.Conventions.AuthorizePage("/Razor/Policy","PolicyName");  //this is a folder route (Pages/Razor/Secured.cshtml)
 					config.Conventions.AuthorizeFolder("/RazorSecure");
 					config.Conventions.AllowAnonymousToPage("/RazorSecure/Anon");
-					
                 });
 			</pre>
 			here all the pages except anan.cshtml within Razor/RazorSecure should be authorized.
 		</li>
 	</ul>
+	<p>
+		<h2><u>Bearer and Bearer Authorization</u></h2><br>
+		<h3>JWT Bearer:</h3><br>
+		<ul>
+			<li></li>
+		</ul>
+	</p>
 </p>
