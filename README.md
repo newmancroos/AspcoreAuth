@@ -489,9 +489,65 @@
 					return Redirect(redirect_uri);
 				}
 				</pre>
-				But in the client side if the check the user claim, IT IS NOT THERE????????????
+				But in the client side if the check the user claim, IT IS NOT THERE????????????.
+				It is because we ned to explicitly tell the config to <b>Save the Token</b>
+				<pre>
+					services.AddAuthentication(config => {
+					//we check the cookie to confirm that we are authenticated
+					config.DefaultAuthenticateScheme = "ClientCookie";
+					//When we sign in we will deal out a cookie
+					config.DefaultSignInScheme = "ClientCookie";
+					//Use this to check if we are allowed to do something
+					config.DefaultChallengeScheme = "OurServer";
+					})
+					.AddCookie("ClientCookie")
+					.AddOAuth("OurServer",config => {
+						config.ClientId = "client_id";
+						config.ClientSecret = "client_Secret";
+						config.CallbackPath = "/oauth/callback";
+						config.AuthorizationEndpoint = "https://localhost:44382/oauth/authorize";
+						config.TokenEndpoint = "https://localhost:44382/oauth/token";
+						config.SaveTokens = true;  // This is where we need to tell to save token
+					});
+				</pre>
 			</li>
 			<li>
+				<b>One main thing is we are getting the access token that doesn't mean all the claim for that user are loaded in to the User context. That we need to load mannually if you need to use them in the client authorization, policy or Role</b>
+				<pre>
+					services.AddAuthentication(config => {
+					//we check the cookie to confirm that we are authenticated
+					config.DefaultAuthenticateScheme = "ClientCookie";
+					//When we sign in we will deal out a cookie
+					config.DefaultSignInScheme = "ClientCookie";
+					//Use this to check if we are allowed to do something
+					config.DefaultChallengeScheme = "OurServer";
+					})
+					.AddCookie("ClientCookie")
+					.AddOAuth("OurServer",config => {
+						config.ClientId = "client_id";
+						config.ClientSecret = "client_Secret";
+						config.CallbackPath = "/oauth/callback";
+						config.AuthorizationEndpoint = "https://localhost:44382/oauth/authorize";
+						config.TokenEndpoint = "https://localhost:44382/oauth/token";
+						config.SaveTokens = true;
+						config.Events = new OAuthEvents()
+						{
+							OnCreatingTicket = context => {
+								var accessToken = context.AccessToken;
+								var base64Payload = accessToken.Split('.')[1];  // Take the payload
+								var bytes = Convert.FromBase64String(base64Payload);
+								var jsonPayload = Encoding.UTF8.GetString(bytes);
+								var claims = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonPayload);
+								foreach (var claim in claims)
+								{
+									context.Identity.AddClaim(new Claim(claim.Key, claim.Value));
+								}
+								return Task.CompletedTask;
+							}
+						};
+					});
+				</pre>
+				Note: If you have any predefined claim like Role it has name like http://..... so if you define such attribute and get Convert.FromBase64String throwing error. so if you have any such claim we can defind as string.
 			</li>
 		</ul>
 	</p>

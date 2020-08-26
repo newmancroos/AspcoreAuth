@@ -24,7 +24,8 @@ namespace Server.Controllers
         {
             var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.Sub, "some_id"),
-                new Claim("granny", "cookie")
+                new Claim("granny", "cookie"),
+                new Claim(ClaimTypes.Role, "Staff")
             };
             //Goto Definition of SigningCredentials and right click on SecurityKey and 
             //press F1 will take you to Microsoft help SecurityKey and we can grab one key from the
