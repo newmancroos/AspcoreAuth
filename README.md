@@ -557,7 +557,7 @@
 					</li>
 					<li>
 						A refresh toekn is a special token that is used to generate additional Access tokens. This allow you to have short-lived Access token without having to collect user credential every time one expires.
-					<li>
+					</li>
 					<li>
 						When we use javascript client, Access token is the one we pass to javascript client and get that access token with every request. We should not pass refresh token to the client, and with every response we should pass the access token to the client so incase of expirey of the access token we generate new access token using refresh token and client can get the new token that they can use from the next request.
 					</li>
