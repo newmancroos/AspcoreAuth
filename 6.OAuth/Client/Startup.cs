@@ -52,6 +52,7 @@ namespace Client
                         }
                     };
                 });
+            services.AddHttpClient(); //Allow us to inject IHttpClientFactory
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
         }

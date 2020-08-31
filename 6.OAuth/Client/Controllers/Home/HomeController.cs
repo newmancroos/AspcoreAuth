@@ -1,16 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Client.Home.Controllers
 {
     public class HomeController : Controller
     {
+        public readonly IHttpClientFactory _httpClientFactory;
+        private readonly HttpClient _client;
+        public HomeController(IHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+            _client = _httpClientFactory.CreateClient();
+        }
         public IActionResult Index()
         {
             return View();
@@ -21,6 +25,12 @@ namespace Client.Home.Controllers
         {
             var token = await HttpContext.GetTokenAsync("access_token");
             //HttpContext.User.HasClaim(c => c.Type =="granny");
+            _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            var serverResponse = await _client.GetAsync("https://localhost:44382/secret/index");
+
+            //Call Api
+            var apiResponse = await _client.GetAsync("https://localhost:44339/secret/index");
+                        
             return View();
         }
 
