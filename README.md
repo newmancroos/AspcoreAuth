@@ -566,10 +566,45 @@
 		</ul>
 	</p>
 	<p>
-		<h2>Identity Server</h2>
+		<h2><u>Identity Server</u></h2>
 		<br>
 		<ul>
-			<li></li>
+			<li>
+				Identity server is a framework that has Authentication and Authorization feature. Authentication using OpenID Connect and Authorization using OAuth2.
+			</li>
+			<li>
+				It enabled the following feature in your application
+				<ul>
+					<li>
+						<b>Authentication as Service</b> <br>
+						Centralized login logic and workflow for all of your applications(Web, native, moble, services). Identity server is an official certified implementation of OpenID Conect
+					</li>
+					<li>
+						<b>Signle Sign-On / Sign-Out</b><br>
+						Sgnle sign-on and sign-out over multiple application types
+					</li>
+					<li>
+						<b>Access Control for APIs (Authorization)</b><br>
+						Issue access token for APIs for various types of clients, eg. Server to Server, Web applications, SPAs and native/mobile apps.
+					</li>
+					<li>
+						<b>Federation Gateway</b></br>
+						Support for external Identity providers like Azure Active Directory, Google, Facebook etc.
+					</li>
+					<li>
+						<b>Focus on Customization</b><br>
+						Many aspects of Identity Server can be customized to fit our needs.
+					</li>
+					<li>
+						<b>Mature Open Source</b><br>
+						Identity Server is open source product. Uses the permissive Apache 2 license that allow building commercial products on top of it.
+					</li>
+					<li>
+						<b>Free and Commercial support</b><br>
+						It is free and if you need any support on building or running, there are servral ways to get help.
+					</li>
+				</ul>
+			</li>
 		</ul>
 	</p>
 </p>
