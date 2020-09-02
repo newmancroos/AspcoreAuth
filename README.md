@@ -607,11 +607,11 @@
 			</li>
 			<li>
 				Typical Token authentication system like follows<br>
-				<img src="../images/tokenauthentication.png" />
+				<img src="./images/tokenauthentication.png" />
 			</li>
 			<li>
 				<b>What Identity Server does?</b> <br>
-				<img src="../images/identityserverauth.png" />
+				<img src="./images/identityserverauth.png" />
 			</li>
 		</ul>
 	</p>
