@@ -613,6 +613,44 @@
 				<b>What Identity Server does?</b> <br>
 				<img src="./images/identityserverauth.png" />
 			</li>
+			<li>
+				Identity server is and OpenID Connect provider - it implements the OpenID Connect and OAuth 2.0 protocols <br>
+				Following are the uses of IDP<br>
+				<ul>
+					<li>Protect you resources</li>
+					<li>Authenticate users using a local account store or via an external identity provider</li>
+					<li>Provides session management and single sign-on</li>
+					<li>Manage and authenticate clients</li>
+					<li>Issue Identity and access token to the client</li>
+					<li>Validate token</li>
+				</ul>
+			</li>
+			<li>
+				Main entities of Identity servers are
+				<ul>
+					<li>
+						<b>User</b><br>
+							A user is a human that is using a registered client to access resources.
+					</li>
+					<li>
+						<b>Client</b><br>
+						Is a piece of software (Javascript app from browser, windows app, mobile app) that request token from Identity server - ether for authenticate a user(request an identity token) or for accessing a resource (requesting an access token) 
+					</li>
+					<li>
+						<b>Resources</b><br>
+						Resources are something we want to protect with Identity server - either identity data of your users or APIs.<br>
+						Every resources has unique name and clients use this name to specify to which resource they want to get access to.<br>
+					</li>
+					<li>
+						<b>Identity Token</b><br>
+						Outcome of Authentication process, contains bare minimum and identifier for the user (subject claim) and information about how and when the user authenticated. It may contain additional identity datat too.
+					</li>
+					<li>
+						<b>Access Token</b><br>
+						Outcome of Authorization process.Allow access to Api resources. Client request access token and forward then to API. Access token contain information about the client and the user. API uses this information to authorize access to their Data, Controller method...
+					</li>					
+				</ul>
+			</li>
 		</ul>
 	</p>
 </p>
