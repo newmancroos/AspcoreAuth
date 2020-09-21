@@ -1,8 +1,5 @@
 ﻿using IdentityModel.Client;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -43,7 +40,6 @@ namespace ApiTwo.Controllers
             //Retrive secret data
             var apiClient = _httpClientFactory.CreateClient();
             apiClient.SetBearerToken(tokenResponse.AccessToken);
-            //apiClient.SetToken("bearer", tokenResponse.AccessToken);
             var response = await apiClient.GetAsync("https://localhost:44356/secret");
 
             var content = await response.Content.ReadAsStringAsync();

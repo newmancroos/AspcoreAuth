@@ -653,4 +653,58 @@
 			</li>
 		</ul>
 	</p>
+	<p style="background-color:teal">
+		<h2>Identity Server concept from Microsoft Webcast</h2><br>
+		When we start building Identity server we can use In-Momory data such as TestUser, Client,Api Scope, IdentityResources and ApiResources
+		<pre>
+			services.AddIdentityServer()
+			.AddSigningCredential("CN=sts") // this 
+				.AddTestUsers()
+				.AddInMemoryClients()
+				.AddInMemoryApiResources()
+				.AddInMemoryIdentityResources()
+				.AddInMemoryApiScope()
+		</pre>
+		<br>
+		Identity server issues Jwt Token which are securied in the sense of they are digitally signed. To do digital signature we need key material, We can use Self signed certificate for Key material that has Public and Private keys, using Makecert we can generate certificate and specify that in Identitserver configuration. let say we have generated a certificate call "sts", thats what we specify above in the Identity server DI specification as <b>.AddSigningCredential("CN=sts")</b>.
+		In <b>Manage Users Certificates</b> we can view all certificates on the computer. 
+		To create Certificate, from Powershell 
+		<pre>
+			New-SelfSignedCertificate -CertStoreLocation Cert:\LocalMachine\My -DnsName "mysite.local" -FriendlyName "MySiteCert" -NotAfter (Get-Date).AddYears(10)
+		</pre>
+		<br>
+		GranTypes is the way how the client communicate with the identity server. there many grant types<br>
+			<ul>
+				<li>Implicit</li>
+				<li>ClientCredential</li>
+				<li>ImplicitAndClientCredentials</li>
+				<li>Code</li>
+				<li>CodeAndClientCredentials</li>
+				<li>Hybrid</li>
+				<li>HybridAndClientCredentials</li>
+				<li>ResourceOwnerPassword</li>
+				<li>ResourceOwnerPasswordAndClientCredentials</li>
+				<li>DeviceFlow</li>
+			</ul>
+		<br>
+		<b>What is Identity Resources?</b><br>
+			Identity resources are data like UserId, Name, email additionally OpenId (in Identity server OpenId means subject that is an unique to identity the user.An Identity resource has a Unique name  and you can assign arbitary claim type to it. these claims will then be included in the identity token for the user. Client will use <b> Scope</b> parameter to request access to an Identity resources, meaning we specify <b>AllowScopes</b> in client so identity server will pass those claim to the user.ex.
+			<pre>
+				AllowedScopes ={"openid", "email", "office"}
+			</pre>
+			os these claim are pass to the user from the client.<br>
+			When you login using Ientity login after login it will ask your permission for profile and other claims. If you want to disable it since we are using our own identity server and clients we can disable it in the Identity client spcification
+			<pre>
+				new client{
+					ClientId="mvc",
+					ClientName="MVC Demo",
+					RequireConsent = false,   //it will disable the consent
+					AllowedGrantTypes= GrantTypes.Implicit,
+					RedirectUris= {"http://localhost:25326/signin-odic"},
+					RedirectUris= {"http://localhost:25326/signout-odic"},  //Signout from all the instance of the application for that user
+					PostLogoutRedirectUris= {"http://localhost:25326/signout-callback-odic"},  //After logout redirect to client application
+					AllowedScopes = {"openid", "office", "email", "office"}
+				}
+			</pre>
+	</p>
 </p>

@@ -12,10 +12,10 @@ namespace ApiOne
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(o =>
-            {
-                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;//these two lines got it from the comments section of this tutorial. with out these line callint api giving no chalenge error.
-                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;   //these two lines got it from the comments section of this tutorial. with out these line callint api giving no chalenge error.
-            })
+                {
+                    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
             .AddJwtBearer("Bearer", config =>{
                 config.Authority = "https://localhost:44320/";
                 config.Audience = "ApiOne";

@@ -16,7 +16,8 @@ namespace ApiTwo
         {
             //This is a Idp client. An Api also can be a client
             services.AddAuthentication()
-                .AddJwtBearer("Bearer", config => {
+                .AddJwtBearer("Bearer", config =>
+                {
                     config.Authority = "https://localhost:44320/";
                     config.Audience = "ApiTwo";
                 });
