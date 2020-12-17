@@ -45,7 +45,7 @@ namespace ApiTwo.Controllers
             apiClient.SetBearerToken(tokenResponse.AccessToken);
             //apiClient.SetToken("bearer", tokenResponse.AccessToken);
             var response = await apiClient.GetAsync("https://localhost:44356/secret");
-
+            //Get 401-Unauthorized, Microsoft video recommand not to use identity Nuget....Want to check
             var content = await response.Content.ReadAsStringAsync();
             //We get content as empty, as per tutorial they advice to degrade Identity server from 4.x.x to 3.0.2 
             return Ok(new

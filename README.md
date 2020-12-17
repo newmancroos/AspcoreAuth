@@ -707,4 +707,10 @@
 				}
 			</pre>
 	</p>
+	<p>
+		<h2>Note:</h2><br>
+		<p>
+			Video 11, Client credential, during the call from Api2 to Api1 using client crdential, getting 401- UnAuthorized error. Need to implement as per channel9 video.  <b>Need to revisit</b>
+		</p>
+	</p>
 </p>
