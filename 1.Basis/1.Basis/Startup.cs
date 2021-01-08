@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using _1.Basis.AuthorizationRequirements;
@@ -27,6 +28,7 @@ namespace _1.Basis
 
             services.AddAuthorization(config =>
             {
+
                 //var defaultAuthBuilder = new AuthorizationPolicyBuilder();
                 //var defaultAuthPolicy = defaultAuthBuilder
                 //.RequireAuthenticatedUser()
