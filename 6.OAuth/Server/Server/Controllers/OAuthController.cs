@@ -95,6 +95,7 @@ namespace Server.Controllers
         [Authorize]
         public IActionResult Validate()
         {
+            //since access token comming in query string we use Query otherwise HttpContext.Header.TryGetValue
             if (HttpContext.Request.Query.TryGetValue("access_token", out var accessToken))
             {
                 return Ok();

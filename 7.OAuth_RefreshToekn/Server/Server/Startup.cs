@@ -39,7 +39,8 @@ namespace Server
                     config.TokenValidationParameters = new TokenValidationParameters()
                     {
                         // Setting expire of Jwt token in 1 millisecond is not working becasue the default is 5 minute. 
-                        //so making ClockSkew makes immidiate apply of the expire time. 
+                        //so making ClockSkew makes immidiate apply of the expire time. This will force to expire in 1 millisecond as we configure in 
+                        //Token method
                         ClockSkew = TimeSpan.Zero, 
                         ValidIssuer = Constants.Issuer,
                         ValidAudience = Constants.Audiance,
