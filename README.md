@@ -655,6 +655,16 @@
 	</p>
 	<p style="background-color:teal">
 		<h2>Identity Server concept from Microsoft Webcast</h2><br>
+		<p>
+			Identity server 4 is an OpenID Connect and OAuth 2.0 framework for ASP.NET Core 2.<br>
+			Its enables the following features in your application<br>
+			<ul>
+				<li>Authentication as Service : Centralized login logic - OpenID Connect</li>
+				<li>Signle Sign-on : Single sign-on over multiple applications</li>
+				<li>Access Control : Authorization - OAuth 2</li>
+				<li>FederationGateway: Support for the external identity provider such as Google, Azure Active Directory</li>
+			</ul>
+		</p>
 		When we start building Identity server we can use In-Momory data such as TestUser, Client,Api Scope, IdentityResources and ApiResources
 		<pre>
 			services.AddIdentityServer()
