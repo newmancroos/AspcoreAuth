@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\callback.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\callback.html" />
+    <None Include="wwwroot\index.html" />
+  </ItemGroup>
+
+</Project>
