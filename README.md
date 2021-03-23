@@ -723,4 +723,42 @@
 			Video 11, Client credential, during the call from Api2 to Api1 using client crdential, getting 401- UnAuthorized error. Need to implement as per channel9 video.  <b>Need to revisit</b>
 		</p>
 	</p>
+	<p>
+		<p>We have command line Identity server templates, this will provide initial templates for developing Identity server.</p>
+		<p>
+			<ol>
+				<li>
+					Install Identity server templates<br>
+					dotnet new -i IdentityServer4.Templates
+				</li>
+				<li>
+					Create empty Identity template which setup Api using client Credential <br>
+					This will create a IdentityServer project. We can use this to call an api using client credential ie Clientid and Client secret<br>
+					dotnet new is4empty -n IdentityServer
+				</li>
+				<li>
+					Add interactive Asp.Net Core Mvc interface to Identity Server project <br>
+					Run this command inside identity server project root. This will create UI for Login, Logout so from any mvc or javascript client we can use Identity server's logn, logout functionalities<br>
+					dotnet new is4ui
+				</li>
+				<li>
+					For Javascript based application<br>
+					This will doenload javascript library to interact with identity server.<br>
+					npm i oidc - client <br>
+					Copy node_modules\oidc - client\dist\* wwwroot
+				</li>
+				<li>
+					In addtion to manually configure EF support we can also use Identity template to create a new project with EF support<br>
+					<b>dotnet new is4ef</b><br>
+					in manual configuration of EF support we need to install<br>
+					<b>IdentityServer4.EntityFramework and Microsfot.EntityFrameworkCore.SqlServer</b> nuget package for supporting IDP.<br>
+					This will create two dbContext<br>
+					1.ConfigurationDbContext - used for configuration data such as client, resources and scopes
+					<br>
+					2.PersistedGrantDbContext - used for temporary operational data such as authorization codes and refresh tokens.
+				</li>
+				<li></li>
+				
+			</ol>
+	</p>
 </p>
