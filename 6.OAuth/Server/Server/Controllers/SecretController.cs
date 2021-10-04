@@ -9,7 +9,7 @@ namespace Server.Controllers
 {
     public class SecretController : Controller
     {
-        [Authorize]
+        [Authorize(Roles ="Staff1")]
         public string Index()
         {
             return "Secret Message";
