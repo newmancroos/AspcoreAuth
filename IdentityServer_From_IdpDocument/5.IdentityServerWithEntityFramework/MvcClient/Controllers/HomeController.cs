@@ -37,6 +37,7 @@ namespace MvcClient.Controllers
         }
         public IActionResult Privacy()
         {
+            var cls = HttpContext.User.Claims;
             return View();
         }
 
